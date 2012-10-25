@@ -1,5 +1,12 @@
 <html>
 
+<head>	
+	<title>Login</title> 
+	<meta name="viewport" content="width=device-width, initial-scale=1"> 
+	<link rel="stylesheet" href="http://code.jquery.com/mobile/1.2.0/jquery.mobile-1.2.0.min.css" />
+	<script src="http://code.jquery.com/jquery-1.8.2.min.js"></script>
+	<script src="http://code.jquery.com/mobile/1.2.0/jquery.mobile-1.2.0.min.js"></script>
+</head>
 
 
 <body>
@@ -20,6 +27,7 @@
     FB.getLoginStatus(function(response) {
   		if (response.status === 'connected') {
     	// connected
+    	
   		} else if (response.status === 'not_authorized') {
     	// not_authorized
     	//login();
@@ -54,13 +62,24 @@
      ref.parentNode.insertBefore(js, ref);
    }(document));
 </script>
-
-
 <!--END OF FACEBOOK CODE -->
-This is the login page.<br>
-Click here to login with facebook(not yet)<br>
-<div class="fb-login-button" data-show-faces="true" data-width="200" data-max-rows="1"></div><br><br>
 
-Click <a href="welcome.html">here</a> to continue on to the app without logging in (for testing purposes?)<br>
+<div data-role="page">
+
+	<div data-role="header">
+		<h1>Login!</h1>
+	</div><!-- /header -->
+
+	<div data-role="content">	
+		<p>
+		<div class="fb-login-button" data-show-faces="true" data-width="200" data-max-rows="1"></div><br>
+		<a href="welcome.html">Continue to application</a><br>
+		</p>		
+	</div><!-- /content -->
+
+</div><!-- /page -->
+
+
+This is the login page.<br>
 </body>
 </html>
