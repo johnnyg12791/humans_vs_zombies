@@ -1,0 +1,66 @@
+<html>
+
+
+
+<body>
+<!-- START OF FACEBOOK CODE -->
+<div id="fb-root"></div>
+<script>
+  // Additional JS functions here
+  window.fbAsyncInit = function() {
+    FB.init({
+      appId      : '170592053078647', // App ID
+      channelUrl : 'http://stanford.edu/~johngold/cgi-bin/humans_vs_zombies/channel.html', // Channel File
+      status     : true, // check login status
+      cookie     : true, // enable cookies to allow the server to access the session
+      xfbml      : true  // parse XFBML
+    });
+
+    // Additional init code here
+    FB.getLoginStatus(function(response) {
+  		if (response.status === 'connected') {
+    	// connected
+  		} else if (response.status === 'not_authorized') {
+    	// not_authorized
+    	//login();
+  		} else {
+    	// not_logged_in
+    	//login();
+  		}
+ 	});
+  };
+  
+  
+  //login info
+  function login() {
+    FB.login(function(response) {
+        if (response.authResponse) {
+            // connected
+            FB.api('/me', function(response) {
+	        	alert('Good to see you, ' + response.name + '.');
+   	 		});
+        } else {
+            // cancelled
+        }
+    	});
+	}
+
+  // Load the SDK Asynchronously
+  (function(d){
+     var js, id = 'facebook-jssdk', ref = d.getElementsByTagName('script')[0];
+     if (d.getElementById(id)) {return;}
+     js = d.createElement('script'); js.id = id; js.async = true;
+     js.src = "//connect.facebook.net/en_US/all.js";
+     ref.parentNode.insertBefore(js, ref);
+   }(document));
+</script>
+
+
+<!--END OF FACEBOOK CODE -->
+This is the login page.<br>
+Click here to login with facebook(not yet)<br>
+<div class="fb-login-button" data-show-faces="true" data-width="200" data-max-rows="1"></div><br><br>
+
+Click <a href="welcome.html">here</a> to continue on to the app without logging in (for testing purposes?)<br>
+</body>
+</html>
