@@ -19,7 +19,7 @@
 
 // initialise the app
 // init.php contains all facebook sdk info, session control, and the works
-require_once('core/init.php');
+	require_once('core/init.php');
 
 ?>
 
@@ -96,11 +96,7 @@ include('inc/header.php');
 					$query = "SELECT * FROM Game_Player_Info, Games where player_id = '$uid' and Games.game_id = Game_Player_Info.game_id";
 					$result = mysql_query($query);
 					while ($row = mysql_fetch_assoc($result)) {
-						echo "Game Name: " . $row['game_name'];
-						echo "<li><form method='post' action='game.php'>";
-						echo "<input name='game_id' value=" . $row['game_id'] . " type='hidden'>";
-						echo "<input name='submit' type='submit'value='Play'>"; 
-						echo "</form></li>";
+						echo "<li><a href='game.php?game_id=" . $row['game_id'] . "' data-ajax='false'>" . $row['game_name'] . "</a></li>";
 					}  
 					?>
 					<li><a href="game1.php">Game 1</a></li>
@@ -117,14 +113,15 @@ include('inc/header.php');
 					while ($row = mysql_fetch_assoc($result)) {
 						echo "You were invited by ". $row['player_name'];
 						echo " to the game: " . $row['game_name'];
-						echo "<br>";
-						echo "<li><form method='post' action='inviteAccepted.php'>";
+						echo "<form method='post' action='inviteAccepted.php'>";
+						
+						
 						echo "<input name='game_id' value=" . $row['game_id'] . " type='hidden'>";
 						echo "<input name='invitee_id' value=" . $row['invitee_id'] . " type='hidden'>";
 						echo "<input name='latitude' value='1' type='hidden'>";
 						echo "<input name='longitude' value='1' type='hidden'>";
 						echo "<input name='accept' type='submit' value='Accept Invite'>";
-						echo "</form></li>";
+						echo "</form>";
 					}  
 					?>
 					<li>See game 3</li>

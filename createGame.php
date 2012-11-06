@@ -6,8 +6,8 @@
  * 
  * Description:     Create a new game
  * 
- * Author:          author
- * Date:            date
+ * Author:          John Gold
+ * Date:            11/5/12
  * Version:         1.1
  * *****************************************************************************
  * *****************************************************************************
@@ -30,9 +30,6 @@ require_once('core/init.php');
 $header_title = "Create Game";
 include('inc/header.php');
 
-
-// copy up to here and paste in all your new files. This will make starting a new file 
-// a hundred times easier
 
 ?>
 
@@ -84,11 +81,11 @@ include('inc/header.php');
 	
 	
 	<ul data-role="listview" data-inset="true" id="beforeCreatedGame">
-	<form action="submitCreateGame.php" method="post" id="createGame" data-ajax="false">
+	<form action="submitCreateGame.php" method="post" id="createGame">
     	<h1>Enter Game Name and Time to start</h1>
     	
         	<input id="game_name" name = "game_name" type="text" placeholder="Enter Game Name" autofocus required>   
-        	<input id="start_date" name = "start_date" type="date" placeholder="Enter Start Date" autofocus required>
+        	<input id="start_date" name = "start_date" type="date" placeholder="Enter Start Date">
             <input id="latitude" name = "latitude" type="hidden">
             <input id="longitude" name = "longitude" type="hidden">
             
@@ -114,7 +111,6 @@ include('inc/header.php');
 		//TODO: then display the friends list and invites
 
 	});
-	
 	
 	</script>
 	

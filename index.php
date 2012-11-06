@@ -148,7 +148,7 @@ if ($user) {
       
       <?php	
       	try {
-        $fql = 'SELECT uid, name, pic_square FROM user WHERE uid = me() OR uid IN (SELECT uid2 FROM friend WHERE uid1 = me()) AND is_app_user = 1 ORDER BY name';
+        $fql = 'SELECT uid, name, pic_square FROM user WHERE uid IN (SELECT uid2 FROM friend WHERE uid1 = me()) AND is_app_user = 1 ORDER BY name';
         $ret_obj = $facebook->api(array(
                                    'method' => 'fql.query',
                                    'query' => $fql,
@@ -166,12 +166,6 @@ if ($user) {
        		<?php
         }
         echo "<br>";
-       /*
-        echo '<pre>Picture: ' . $ret_obj[0]['pic_square'] . '</pre>';
-        
-        echo '<pre>Name: ' . $ret_obj[1]['name'] . '</pre>';
-        echo '<pre>Picture: ' . $ret_obj[1]['pic_square'] . '</pre>';
-        */
 
       } catch(FacebookApiException $e) {
         // If the user is logged out, you can have a 

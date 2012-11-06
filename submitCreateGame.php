@@ -1,5 +1,8 @@
 <?
 session_start();
+
+require_once('core/init.php');
+
 ?>
 
 
@@ -36,22 +39,80 @@ $game_id = $row["game_id"];
 echo "and the game id is $game_id<br>";
 echo "the player name is $creator_name<br>";
 
+?>
+
+
+<?php
+if ($user_id) {
+	try {
+		$fql = 'SELECT uid, name, pic_square FROM user WHERE uid IN (SELECT uid2 FROM friend WHERE uid1 = me()) AND is_app_user = 1 ORDER BY name';
+		$ret_obj = $facebook->api(array(
+                                   'method' => 'fql.query',
+                                   'query' => $fql,
+                                 ));
+                                 
+		$count = count($ret_obj);
+		?>
+		<h3>Select friends to invite!</h3>
+		<?php
+		for ($i = 0; $i < $count; $i++) {
+        	?>
+        	<img src="<?php echo $ret_obj[$i]['pic_square']; ?>">
+       		<?php
+       		echo $ret_obj[$i]['name'];
+       		// echo $ret_obj[$i]['uid'];
+       		?>
+       		<div>
+       			<form action="invite.php" method="post" id="inviteFriend_<?php echo $ret_obj[$i]['uid']; ?>">
+       		
+            	<input id="friend_id" name="friend_id" value="<?php echo $ret_obj[$i]['uid']; ?>" type="hidden">
+           	 	<input id="game_id" name="game_id" value="<?php echo $game_id; ?>" type="hidden">
+            
+        		<input id="submit" type="submit" value="Invite">
+				</form>
+			</div>
+			
+			<script>
+				
+				$("#inviteFriend_<?php echo $ret_obj[$i]['uid']; ?>").submit(function(event) {
+					alert("just invited a friend");
+					event.preventDefault();
+					$.post("invite.php", $("#inviteFriend_<?php echo $ret_obj[$i]['uid']; ?>").serialize(), function(data){
+						$("#inviteFriend_<?php echo $ret_obj[$i]['uid']; ?>").html = "Invited!";
+					});
+				});
+			</script>
+
+       		<?php
+       		echo '<br>';
+        }
+	}
+	catch(FacebookApiException $e) {
+		$login_url = $facebook->getLoginUrl(); 
+        echo 'Please <a href="' . $login_url . '">login.</a>';
+        error_log($e->getType());
+        error_log($e->getMessage());
+	}		
+}
+?>
+
+	
+
+<?php
 
 $query3 = "insert into Game_Player_Info (game_id, player_id, player_name, recent_latitude, recent_longitude) values ('$game_id', '$creator_id', '$creator_name', '$latitude', '$longitude');";
 $result2 = mysql_query($query3);
-
-
 /*this is just for testing that the queries worked*/
 	if ($result2) {
-		echo "good query for GamePlayerInfo<br>";
+		//echo "good query for GamePlayerInfo<br>";
 	} else {
-		echo "bad query for GamePlayerInfo<br>";
+		//echo "bad query for GamePlayerInfo<br>";
 	}
 
 	if ($result) {
-		echo "good query for Games<br>";
+		//echo "good query for Games<br>";
 	} else {
-		echo "bad query for Games";
+		//echo "bad query for Games";
 	}
 
 ?>

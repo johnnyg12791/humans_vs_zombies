@@ -26,6 +26,7 @@ include('inc/header.php');
 	<div data-role="content">
 		<div id="mapholder" style="width: devic-width; height: 400px;"></div>
 		<script src="http://maps.google.com/maps/api/js?sensor=true"></script>
+		
 	<script>
 		var x=document.getElementById("demo");
 		getLocation();
@@ -50,12 +51,11 @@ include('inc/header.php');
 			  mapTypeId:google.maps.MapTypeId.ROADMAP,
 			  mapTypeControl:false
 		  };
-		  //initialize the map
 		  var map=new google.maps.Map(document.getElementById("mapholder"),myOptions);
 		  var marker=new google.maps.Marker({position:latlon,map:map,title:"You are here!"});
 		  marker.setIcon('http://maps.google.com/mapfiles/ms/micons/blue-dot.png')
 		  var infowindow = new google.maps.InfoWindow({
-            content: '<p> You are a Human.</p><p> Survival time: 3.67 hours. </p>'
+            content: '<p> You are a Human.</p><p> Survival time: 24 hours. </p>'
           });
 		  google.maps.event.addListener(marker, 'click', function() {
           	infowindow.open(map,marker);
@@ -109,6 +109,7 @@ include('inc/header.php');
 	<h6 style="text-align:right;"><img src="http://icongal.com/gallery/image/45157/running_man_animation.png">Humans: 2 <img src="http://android-emotions.com/wp-content/flagallery/zombie-run/zombie-run-cover.png">Zombies: 2<a data-role="button" onclick="getLocation()" data-icon="refresh" data-mini="true" data-inline="true">Update Location</a><h6>
 	
 </div><!-- /content -->
+
 	
 	<div data-role="footer" data-id="samebar" class="nav-icons" data-position="fixed" data-tap-toggle="false">
 	

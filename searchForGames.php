@@ -6,8 +6,8 @@
  * 
  * Description:     A search script to search for games
  * 
- * Author:          author
- * Date:            date
+ * Author:          John Gold
+ * Date:            11/5/12
  * Version:         1.1
  * *****************************************************************************
  * *****************************************************************************
@@ -34,7 +34,9 @@ include('inc/header.php');
 
 ?>
 
+
 <body>
+    
     
     <div data-role="page">
 
@@ -55,7 +57,7 @@ include('inc/header.php');
 						</form>
 						<div id="GameNameResults"></div>
 					</ul>
-	        	</div>
+	        	</div><!-- end of collapsible -->
 	        	
 	        	<div data-role="collapsible" data-inset="true">
 					<h3>Search by Friend Name</h3>
@@ -67,8 +69,17 @@ include('inc/header.php');
 						<div data-role="listview" data-inset="true" id="FriendNameResults"></div>
 					</ul>
 	        	</div> <!-- end of collapsible -->
+	        	
 	        	</div> <!-- /end of collapsible set -->
-			<li><a href="gamesNearby.html">Find Games Near Me</a></li>
+	        	
+			<li>
+				<form id="gamesNearby" method="post" action="gamesNearby.php" data-ajax="false">
+				<input id="latitude" name = "latitude" type="hidden">
+            	<input id="longitude" name = "longitude" type="hidden">
+            	<input id="submit" name = "submit" type = "submit" value="Search For Games Nearby">
+            	</form>
+			<!--<a href="gamesNearby.php">Find Games Near Me</a> -->
+								</li>
 		</ul> <!-- end of listview -->
 		
 	</div><!-- /content -->
@@ -89,6 +100,40 @@ include('inc/header.php');
 			$("#FriendNameResults").html(data);
 		});
 	});
+	</script>
+	
+	<!--ideally can include geolocation.js instead of all this code, but it works for now -->
+	<script>
+       	var latitude = 0;
+		var longitude = 0;
+		if (navigator.geolocation) {
+			var timeoutVal = 10 * 1000 * 1000;
+			navigator.geolocation.getCurrentPosition(
+				setLatAndLong, 
+				displayError,
+				{ enableHighAccuracy: true, timeout: timeoutVal, maximumAge: 0 }
+			);
+		}
+		else {
+			alert("Geolocation is not supported by this browser");
+		}
+			
+		function setLatAndLong(position) {
+			latitude = position.coords.latitude;
+			longitude = position.coords.longitude;
+			document.getElementById("latitude").value = latitude;
+			document.getElementById("longitude").value = longitude;
+		}
+			
+		function displayError(error) {
+			var errors = { 
+				1: 'Permission denied',
+				2: 'Position unavailable',
+				3: 'Request timeout'
+			};
+			alert("Error: " + errors[error.code]);
+		}
+		
 	</script>
 	
 	
