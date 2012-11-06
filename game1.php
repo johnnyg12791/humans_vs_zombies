@@ -4,7 +4,7 @@
 
 // generate page title and include the header
 // $header_title is passed in the header.php file
-$header_title = "Create Game";
+$header_title = "Game 1";
 include('inc/header.php');
 
 
@@ -18,22 +18,13 @@ include('inc/header.php');
     <div data-role="page">
 
 	<div data-role="header">
+	    <a href="areYouSure.php" data-rel="dialog" data-transition="pop" data-icon="delete">Resign</a>
 		<h1>Game 1</h1>
+		<a href="gameDetails.php" data-icon="arrow-r">More</a>
 	</div><!-- /header -->
 
 	<div data-role="content">
-	
-
-		    <h4 style="text-align:center;">You are a Human!</h4>
-		    <p> Hours survived: 3<p>
-		
-			<div data-role="controlgroup" data-type="horizontal">
-				<a data-role="button" onclick="getLocation()" data-icon="refresh" data-iconpos="top" data-mini="true" data-inline="true">Refresh</a>
-				<a href="welcome.php" data-role="button" data-icon="delete" data-iconpos="top" data-mini="true" data-inline="true">Resign</a>
-				<a data-role="button" data-icon="arrow-r" data-iconpos="top" data-mini="true" data-inline="true">More</a>
-			</div>
-	
-		<div id="mapholder"></div>
+		<div id="mapholder" style="width: devic-width; height: 400px;"></div>
 		<script src="http://maps.google.com/maps/api/js?sensor=true"></script>
 	<script>
 		var x=document.getElementById("demo");
@@ -51,15 +42,51 @@ include('inc/header.php');
 		  mapholder=document.getElementById('mapholder');
 		  mapholder.style.height='400px';
 		  mapholder.style.width='device-width';
+		  
+		  
+		  
 		  var myOptions={
-			  center:latlon,zoom:17,
+			  center:latlon,zoom:15,
 			  mapTypeId:google.maps.MapTypeId.ROADMAP,
-			  mapTypeControl:false,
-		  navigationControlOptions:{style:google.maps.NavigationControlStyle.SMALL}
+			  mapTypeControl:false
 		  };
+		  //initialize the map
 		  var map=new google.maps.Map(document.getElementById("mapholder"),myOptions);
 		  var marker=new google.maps.Marker({position:latlon,map:map,title:"You are here!"});
-		
+		  marker.setIcon('http://maps.google.com/mapfiles/ms/micons/blue-dot.png')
+		  var infowindow = new google.maps.InfoWindow({
+            content: '<p> You are a Human.</p><p> Survival time: 3.67 hours. </p>'
+          });
+		  google.maps.event.addListener(marker, 'click', function() {
+          	infowindow.open(map,marker);
+          });
+		  infowindow.open(map,marker);
+		  lat2=37.429054;
+		  lon2=position.coords.longitude;
+		  latlon2=new google.maps.LatLng(lat2, lon2);
+		  var zombieMarker=new google.maps.Marker ({position:latlon2, map:map, title: "Zombies here!"});
+		  zombieMarker.setIcon('http://android-emotions.com/wp-content/flagallery/zombie-run/zombie-run-cover.png')
+		  
+		  var infowindow2 = new google.maps.InfoWindow({
+            content: '<p> Lucille Benoit is a Zombie.</p><p> Killed: 1 human. </p>'
+          });
+		  google.maps.event.addListener(zombieMarker, 'click', function() {
+          	infowindow2.open(map,zombieMarker);
+          });
+		  
+		  
+		  
+		  lat4=37.425054;
+		  lon4=-122.175415;
+		  latlon4=new google.maps.LatLng(lat4, lon4);
+		  var zombieMarker2=new google.maps.Marker ({position:latlon4, map:map, title: "More zombies here!"});
+		  zombieMarker2.setIcon('http://android-emotions.com/wp-content/flagallery/zombie-run/zombie-run-cover.png')
+		  
+		  lat3=37.427339;
+		  lon3=-122.165415;
+		  latlon3=new google.maps.LatLng(lat3, lon3);
+		  var humanMarker=new google.maps.Marker ({position:latlon3, map:map, title: "Humans here!"});
+		  humanMarker.setIcon('http://icongal.com/gallery/image/45157/running_man_animation.png')
 		}
 	
 		function showError(error){
@@ -77,10 +104,10 @@ include('inc/header.php');
 	      			x.innerHTML="An unknown error occurred."
 	      			break;
 	    	}
-	  	}
+		}
 	</script>
-	<p>humans: 3</p>
-	<p>zombies: 10</p>
+	<h6 style="text-align:right;"><img src="http://icongal.com/gallery/image/45157/running_man_animation.png">Humans: 2 <img src="http://android-emotions.com/wp-content/flagallery/zombie-run/zombie-run-cover.png">Zombies: 2<a data-role="button" onclick="getLocation()" data-icon="refresh" data-mini="true" data-inline="true">Update Location</a><h6>
+	
 </div><!-- /content -->
 	
 	<div data-role="footer" data-id="samebar" class="nav-icons" data-position="fixed" data-tap-toggle="false">

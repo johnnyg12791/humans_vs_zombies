@@ -83,32 +83,38 @@ include('inc/header.php');
 	</script>
 	
 	
-	<ul data-role="listview" data-inset="true">
-	<form action="submitCreateGame.php" method="post" id="createGame">
+	<ul data-role="listview" data-inset="true" id="beforeCreatedGame">
+	<form action="submitCreateGame.php" method="post" id="createGame" data-ajax="false">
     	<h1>Enter Game Name and Time to start</h1>
-    	<fieldset id="inputs">
+    	
         	<input id="game_name" name = "game_name" type="text" placeholder="Enter Game Name" autofocus required>   
-        	<input id="start_date" name = "start_date" type="date" placeholder="Enter Start Date">
+        	<input id="start_date" name = "start_date" type="date" placeholder="Enter Start Date" autofocus required>
             <input id="latitude" name = "latitude" type="hidden">
             <input id="longitude" name = "longitude" type="hidden">
-    	</fieldset>
-    	
-    	<fieldset id="actions">
-        	<input type="submit" id="submit" value="Go">
-    	</fieldset>
+            
+        	<input id="submit" type="submit" value="Go">
 	</form>
 	</ul>
+	
+	<div id="GameCreatedResults"></div>
+	<div id="FriendsList"></div>
 	
 	</div><!-- /content -->
 	
 	<!--submit search for game name script -->
 	<script type="text/javascript">
-	$("#createGame").click(function() {
+	$("#createGame").submit(function(event) {
 		event.preventDefault();
 		$.post("submitCreateGame.php", $("#createGame").serialize(), function(data){
-			$("#GameNameResults").html(data);
+			$("#GameCreatedResults").html(data);
 		});
+		
+		//this removes the form
+		$("#createGame").empty();
+		//TODO: then display the friends list and invites
+
 	});
+	
 	
 	</script>
 	

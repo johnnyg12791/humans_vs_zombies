@@ -49,17 +49,18 @@ include('inc/header.php');
 				<div data-role="collapsible" data-inset="true">
 					<h3>Search by Game Name</h3>
 					<ul data-role="listview" data-inset="true">
-						<form id="searchByGameName" method="post" action="searchByGameName.php">
+						<form id="searchByGameName" method="post" action="searchByGameName.php"  data-ajax="false">
         					<input id="gameName" name="game_name" type="text" placeholder="Enter Game Name" autofocus required>
 					        <input type="submit" id="submit" value="Go">
 						</form>
 						<div id="GameNameResults"></div>
 					</ul>
 	        	</div>
+	        	
 	        	<div data-role="collapsible" data-inset="true">
 					<h3>Search by Friend Name</h3>
 					<ul data-role="listview" data-inset="true">
-						<form id="searchByFriendName" method="post" action="searchByFriendName.php">
+						<form id="searchByFriendName" method="post" action="searchByFriendName.php"  data-ajax="false">
         					<input id="friendName" name="friend_name" type="text" placeholder="Enter Friend Name" autofocus required>
 							<input type="submit" id="submit" value="Go">
 						</form>
@@ -70,19 +71,19 @@ include('inc/header.php');
 			<li><a href="gamesNearby.html">Find Games Near Me</a></li>
 		</ul> <!-- end of listview -->
 		
-	
 	</div><!-- /content -->
 	
 	<!--submit search for game name script -->
 	<script type="text/javascript">
-	$("#searchByGameName").click(function() {
+	
+	$("#searchByGameName").submit(function(event) {
 		event.preventDefault();
 		$.post("searchByGameName.php", $("#searchByGameName").serialize(), function(data){
 			$("#GameNameResults").html(data);
 		});
 	});
 	
-	$("#searchByFriendName").click(function() {
+	$("#searchByFriendName").submit(function(event) {
 		event.preventDefault();
 		$.post("searchByFriendName.php", $("#searchByFriendName").serialize(), function(data){
 			$("#FriendNameResults").html(data);

@@ -72,10 +72,12 @@ include('inc/header.php');
 	</div><!-- /content -->
 	
 	<div data-role="footer" data-id="samebar" class="nav-icons" data-position="fixed" data-tap-toggle="false">
+	
+	<?php
+		include('inc/navBar.php');
+	?>
 
-	<!--#include virtual="inc/navBar/php" -->
-		
-	</div>
+	<!--#include virtual="inc/navBar.php" -->
 	
 	</div><!-- /page -->
 	

@@ -27,15 +27,11 @@ require_once('core/init.php');
 <?php
 
 // generate page title and include the header
-// $header_title is passed in the header.php file
-$header_title = "Welcome";
+$header_title = "Help";
 include('inc/header.php');
 
-
-// copy up to here and paste in all your new files. This will make starting a new file 
-// a hundred times easier
-
 ?>
+
 
 <body>
 
@@ -43,23 +39,32 @@ include('inc/header.php');
 <div data-role="page">
 
 	<div data-role="header">
-		<a href="welcome.php" data-icon="arrow-l">Back</a>
+	<a onclick="history.back(-1)" data-icon="arrow-l">Back</a>
+		
 		<h1>Help</h1>
 	</div><!-- /header -->
 
 	<div data-role="content">
 		<!-- TODO: link to settings here -->
+	
 		<div data-role="collapsible">
 		   <h3>Game Play</h3>
-		   <p>This is an Alternate Reality Game. It is played in the real world, but also occurs virtually.<br>
-		The objective of the game is to be the last human standing.<br>
-		Each game starts with 1 zombie, randomly choosen, and that person can attack humans when close enough.<br>
-		When attacked, a human then becomes a zombie, and has the power to attack humans after that. <br></p>
+		   <ul>
+		   <li>This is a virtual reality Humans vs. Zombies game, so as you and your friends run around in real life, you will see them represented as humans and zombies moving around on your game map.</li>
+		   <li>This red icon represents the zombies.</li>
+		   <img src="http://android-emotions.com/wp-content/flagallery/zombie-run/zombie-run-cover.png">
+		   <li>This blue icon represents the humans.</li>
+		   <img src="http://icongal.com/gallery/image/45157/running_man_animation.png">
+		   <li>Each game starts with 1 zombie, randomly choosen.</li>
+		   <li>When a zombie is within 30 feet of a human he can attack, and that human then becomes a zombie.</li>
+		   <li>The game ends when there is only one human standing.</li>
+		   </ul>
 			<div data-role="collapsible">
 			<h4>Being a Human</h4>
 			<ul>
 			<li>Your objective is to survive as long as possible.</li>
-			<li>Your game map shows other humans as blue dots, and zombies as red triangles. If you see a zombie approaching you run away!</li>
+			
+			<li>If you see a zombie approaching you, run away!</li>
 			<li>Above the map you can see the number of hours you have survived, an option to resign from the game, and an option to view more information on the players in the game.</li>
 			<li>In the bottom right corner of the map you can find the current number of zombies and number of humans in the game.</li>
 			<li>That's all you need to know, be the last human standing!</li>
@@ -69,8 +74,8 @@ include('inc/header.php');
 			<h4>Being a Zombie</h4>
 			<ul>
 			<li>Your objective is to convert as many humans into zombies as possible.</li>
-			<li>Your game map shows humans as blue dots, and other zombies as red triangles. If you see a human nearby, run towards them until you are close enough to attack!</li>
-			<li>When you are close enough to attack a human the attack button above your map will light up.</li>
+			<li>Your game map shows humans in blue, and other zombies in red. If you see a human nearby, run towards them until you are close enough to attack!</li>
+			<li>When you are within 30 feet of a human you will be able to select their icon and attack!</li>
 			<li>Also above the map you can see the number of humans you have converted, an option to resign from the game, and an option to view more information on the players in the game.</li>
 			<li>In the bottom right corner of the map you can find the current number of zombies and number of humans in the game.</li>
 			<li>That's all you need to know, go attack the humans!</li>
@@ -96,6 +101,8 @@ include('inc/header.php');
 			</ol>
 		</div>
 		<br><br><br>
+		
+		
 		
 		<!-- START OF FACEBOOK CODE -->
 		<div id="fb-root"></div>
@@ -150,6 +157,7 @@ include('inc/header.php');
 		     ref.parentNode.insertBefore(js, ref);
 		   }(document));
 		   
+		
 		   
 		</script>   
 		<a href="#" onclick="getUserFriends();">Get friends</a><br>

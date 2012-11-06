@@ -2,6 +2,43 @@
 		.nav-icons .ui-btn .ui-icon { width: 30px!important; height: 30px!important; margin-left: -15px !important; box-shadow: none!important; -moz-box-shadow: none!important; -webkit-box-shadow: none!important; -webkit-border-radius: 0 !important; border-radius: 0 !important; } 
 		
 		#home .ui-icon { background: url(img/icons/53-house.png) 50% 50% no-repeat; background-size: 24px 26px; }
-		#help .ui-icon { background: url('img/icons/19-gear.png') 50% 50% no-repeat; background-size: 24px 26px; }
+		#help .ui-icon { background: url(icons/questionmark.png) 50% 50% no-repeat; background-size: 24px 26px; }
 		#createGame .ui-icon { background:  url('img/icons/63-runner.png') 50% 50% no-repeat; background-size: 24px 26px;  }
 		#searchForGames .ui-icon { background:  url('img/icons/06-magnify.png') 50% 50% no-repeat;  background-size: 24px 26px; }
+		
+		
+		
+		.fb-title {
+		background-color:rgb(0,150,255);
+		color:#fff;
+		padding:0 12px;
+		text-shadow:-1px 1px rgb(0,50,255);
+		font-weight:bold;
+		margin-bottom:24px;
+		
+		-webkit-border-radius: 4px;
+		   -moz-border-radius: 4px;
+		        border-radius: 4px;
+	}
+	
+	.fb-message {
+		background-color:rgb(230,240,245);
+		margin-bottom:24px;
+		padding:0 12px;
+		color:#333;
+		text-shadow:-1px 1px #fff;
+		
+		-webkit-border-radius: 4px;
+		   -moz-border-radius: 4px;
+		        border-radius: 4px;
+	}
+	
+	.fb-date {
+		color:#999;
+		font-size:14px;
+		font-style:italic;
+	}
+	
+	.fb-update .fb-message:nth-child(2n) {
+		background-color:#eee;
+	}
