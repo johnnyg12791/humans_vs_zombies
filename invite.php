@@ -1,5 +1,4 @@
 <?php
-session_start();
 
 require_once('core/init.php');
 
@@ -8,9 +7,26 @@ require_once('core/init.php');
 <html>
 <body>
 
+
 <?php
 
-$inviter_id = $_SESSION['user_fb_id'];
+if ($user_id) {
+	$user_profile_query = 'SELECT name FROM user WHERE uid = me()';
+	$user_profile_result = $facebook->api(array(
+                                   'method' => 'fql.query',
+                                   'query' => $user_profile_query,
+                                 ));
+}
+else {
+	?>
+	<script>
+	window.location = "http://stanford.edu/~johngold/cgi-bin/humans_vs_zombies/index.php"
+	</script>
+	<?php
+}
+
+
+$inviter_id = $user_id;
 $invitee_id = $_POST['friend_id'];
 $game_id = $_POST['game_id'];
 

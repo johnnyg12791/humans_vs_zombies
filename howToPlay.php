@@ -39,8 +39,7 @@ include('inc/header.php');
 <div data-role="page">
 
 	<div data-role="header">
-	<a onclick="history.back(-1)" data-icon="arrow-l">Back</a>
-		
+		<a onclick="history.back(-1)" data-icon="arrow-l">Back</a>
 		<h1>Help</h1>
 	</div><!-- /header -->
 
@@ -100,90 +99,7 @@ include('inc/header.php');
 		   <li>Press Join! to get in on the game.</li>
 			</ol>
 		</div>
-		<br><br><br>
-		
-		
-		
-		<!-- START OF FACEBOOK CODE -->
-		<div id="fb-root"></div>
-		<script>
-		 // Additional JS functions here
-		  window.fbAsyncInit = function() {
-		    FB.init({
-		      appId      : '170592053078647', // App ID
-		      channelUrl : 'http://stanford.edu/~johngold/cgi-bin/humans_vs_zombies/channel.html', // Channel File
-		      status     : true, // check login status
-		      cookie     : true, // enable cookies to allow the server to access the session
-		      xfbml      : true  // parse XFBML
-		    });
-		    
-		     // Additional init code here
-		    FB.getLoginStatus(function(response) {
-		  		if (response.status === 'connected') {
-		    	// connected
-		    	
-		  		} else if (response.status === 'not_authorized') {
-		    	// not_authorized
-		    	//login();
-		  		} else {
-		    	// not_logged_in
-		    	//login();
-		  		}
-		 	});
-		  };
-		  
-		  
-		  //login info
-		  function login() {
-		    FB.login(function(response) {
-		        if (response.authResponse) {
-		            // connected
-		            FB.api('/me', function(response) {
-			        	alert('Good to see you, ' + response.name + '.');
-		   	 		});
-		        } else {
-		            // cancelled
-		        }
-		    	});
-			}
-
-		    
-		  // Load the SDK Asynchronously
-		  (function(d){
-		     var js, id = 'facebook-jssdk', ref = d.getElementsByTagName('script')[0];
-		     if (d.getElementById(id)) {return;}
-		     js = d.createElement('script'); js.id = id; js.async = true;
-		     js.src = "//connect.facebook.net/en_US/all.js";
-		     ref.parentNode.insertBefore(js, ref);
-		   }(document));
-		   
-		
-		   
-		</script>   
-		<a href="#" onclick="getUserFriends();">Get friends</a><br>
-		<div id="user-friends"></div>
-		<script>
-		  function getUserFriends() {
-		    FB.api('/me/friends&fields=name,picture', function(response) {
-		      console.log('Got friends: ', response);
-		      
-		      if (!response.error) {
-		        var markup = '';
-		        
-		        var friends = response.data;
-		        
-		        for (var i=0; i < friends.length && i < 25; i++) {
-		          var friend = friends[i];
-		          
-		          markup += '<img src="' + friend.picture + '"> ' + friend.name + '<br>';
-		        }
-		        
-		        document.getElementById('user-friends').innerHTML = markup;
-		      }
-		    });
-		  }
-	  </script>
-
+		<br>
 	
 	
 	

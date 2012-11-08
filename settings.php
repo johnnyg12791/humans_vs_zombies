@@ -40,12 +40,13 @@ include('inc/header.php');
     <div data-role="page">
 
 	<div data-role="header">
+		<a onclick="history.back(-1)" data-icon="arrow-l">Back</a>
 		<h1>Settings</h1>
 	</div><!-- /header -->
 
 	<div data-role="content">
 	
-<div data-role="fieldcontain">
+			<div data-role="fieldcontain">
 				<label for="music">Music:</label>
 				<select name="music" id="music" data-role="slider">
 					<option value="off">Off</option>
@@ -53,7 +54,7 @@ include('inc/header.php');
 				</select>
 			</div>
 
-<div data-role="fieldcontain">
+			<div data-role="fieldcontain">
 				<label for="sound">Sound:</label>
 				<select name="sound" id="sound" data-role="slider">
 					<option value="off">Off</option>

@@ -1,27 +1,29 @@
-<?
-session_start();
+<?php
+	require_once('core/init.php');
 ?>
 
 <html>
+
 <body>
 <!-- called when a user joins a game after searching (by friend name or game name) -->
 <?
-include("core/db/dbConfig.php");
+
+
 $game_id = $_POST['game_id']; 
-/*name and id stored in session variables*/
-$player_id = $_SESSION['user_fb_id'];
-$player_name = $_SESSION['user_fb_name'];
+
+$player_id = $_POST['invitee_id'];//CHECK THIS
+
 /*basically get current latitude and longitude*/
 /*maybe can also use get/post requests*/
-$recent_latitude = 4;
-$recent_longitude = 5;
+$recent_latitude = $_POST['latitude'];
+$recent_longitude = $_POST['longitude'];
 
-$query = "insert into Game_Player_Info (game_id, player_id, player_name, recent_latitude, recent_longitude) values ('$game_id', '$player_id', '$player_name', '$latitude', '$longitude');";
+$query = "insert into Game_Player_Info (game_id, player_id, recent_latitude, recent_longitude) values ('$game_id', '$player_id', '$latitude', '$longitude')";
 $result = mysql_query($query);
 
 
 if($result) {
-	echo "good stuff, submitted to database";
+	echo "good stuff, user joined the game_player_info database";
 } else {
 	echo "database submit error";
 }

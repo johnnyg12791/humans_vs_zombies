@@ -83,21 +83,37 @@ include('inc/header.php');
 		  mapholder=document.getElementById('mapholder');
 		  mapholder.style.height='400px';
 		  mapholder.style.width='device-width';
-		  var myOptions={
-			  center:latlon,zoom:15,
-			  mapTypeControlOptions: {
-              mapTypeIds: [google.maps.MapTypeId.ROADMAP, MY_MAPTYPE_ID]
-              },
-          mapTypeId: MY_MAPTYPE_ID,
+		  var isHuman=1;
+		  var map;
+		  if(isHuman){
+		  	var myOptions={
+			 	 center:latlon,zoom:15,
+			 	 mapTypeId:google.maps.MapTypeId.ROADMAP,
+			  	mapTypeControl:false
+		 	 };
+		 	 //initialize the map
+		  	 map=new google.maps.Map(document.getElementById("mapholder"),myOptions);
+		  }else{
+		  //HUMANVERSION^^^^^^^
 		  
-		  };
-		  var map=new google.maps.Map(document.getElementById("mapholder"),myOptions);
-		  var styledMapOptions = {
-          name: 'Zombie Mode'
-        };
-        
-        var myMapType = new google.maps.StyledMapType(styles, styledMapOptions);
-         map.mapTypes.set(MY_MAPTYPE_ID, myMapType);
+		  //ZOMBIEVERSION!!!
+		  	var myOptions={
+				  center:latlon,zoom:15,
+				  mapTypeControlOptions: {
+        	      	mapTypeIds: [google.maps.MapTypeId.ROADMAP, MY_MAPTYPE_ID]
+				  },
+        	  	  mapTypeId: MY_MAPTYPE_ID
+			 };
+			 map=new google.maps.Map(document.getElementById("mapholder"),myOptions);
+		  	 var styledMapOptions = {
+          		name: 'Zombie Mode'
+          	};
+         	var myMapType = new google.maps.StyledMapType(styles, styledMapOptions);
+         	map.mapTypes.set(MY_MAPTYPE_ID, myMapType);
+		  }
+          
+          
+          
 		  var marker=new google.maps.Marker({position:latlon,map:map,title:"You are here!"});
 		  var infowindow = new google.maps.InfoWindow({
             content: '<p> You are a Zombie.</p><p> You have killed: 3 humans. </p>'
@@ -123,10 +139,19 @@ include('inc/header.php');
 		  latlon3=new google.maps.LatLng(lat3, lon3);
 		  var humanMarker=new google.maps.Marker ({position:latlon3, map:map, title: "Humans here!"});
 		  humanMarker.setIcon('http://icongal.com/gallery/image/45157/running_man_animation.png')
-          var infowindow2 = new google.maps.InfoWindow({
-            content: '<p> John Gold is a Human.</p>'+'<p> Survival time: 3.67 hours </p>'+'<p><a href="attack.php">'+
-            'Attack!</a></p>'
-          });
+          var distanceFromYou=30;
+          var infowindow2;
+          if(distanceFromYou<15){
+          	infowindow2 = new google.maps.InfoWindow({
+            content: '<h5> John Gold is a Human.</h5>'+'<h5> Survival time: 3.67 hours </h5>'+'<h5><a href="attack.php">'+
+            'Attack!</a></h5>'
+             });
+          }else{
+          	infowindow2 =new google.maps.InfoWindow({
+            	content: '<h5> John Gold is a Human.</h5>'+'<h5> Survival time: 3.67 hours </h5>'+'<h5> You must get closer to attack</h5>'
+          	});
+          }
+         
 		  google.maps.event.addListener(humanMarker, 'click', function() {
           	infowindow2.open(map,humanMarker);
           });

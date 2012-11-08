@@ -6,7 +6,7 @@
  * 
  * Description:     The landing page for the application
  * 
- * Author:          author
+ * Author:          Justin/John
  * Date:            date
  * Version:         1.1
  * *****************************************************************************
@@ -33,6 +33,26 @@ if ($user) {
   try {
     // Proceed knowing you have a logged in user who's authenticated.
     $user_profile = $facebook->api('/me');
+    
+    
+    
+    //This is for the Fb_Id_Name table in the database
+    $uid = $user;
+    $user_name = $user_profile['name'];
+    
+    $checkQuery = "select * from Fb_Id_Name where fb_id = '$uid' ";
+    $checkResult = mysql_query($checkQuery);
+    if(mysql_num_rows($checkResult)==0){
+    
+    $query = "insert into Fb_Id_Name values ('$uid', '$user_name');";
+    $result = mysql_query($query);                
+    if($result) 
+    	echo "Welcome to Humans vs Zombies (for the first time)";
+    } //else user is in the database, no need to change anything
+    
+    
+    
+    
   } catch (FacebookApiException $e) {
     error_log($e);
     $user = null;
@@ -53,155 +73,92 @@ if ($user) {
 
 <!doctype html>
 <html xmlns:fb="http://www.facebook.com/2008/fbml">
-  <head>
-    <title>Login</title>
-    <style>
-      body {
-        font-family: 'Lucida Grande', Verdana, Arial, sans-serif;
-      }
-      h1 a {
-        text-decoration: none;
-        color: #3b5998;
-      }
-      h1 a:hover {
-        text-decoration: underline;
-      }
-    </style>
-  </head>
+
+<?php
+
+// generate page title and include the header
+// $header_title is passed in the header.php file
+$header_title = "Login";
+include('inc/header.php');
+
+
+?>
+
 <body>
 
-<div data-role="page">
+	<div data-role="page">
 
-	<div data-role="header">
-		<h1>Login!</h1>
-	</div><!-- /header -->
+		<div data-role="header">
+			<h1>Login!</h1>
+		</div><!-- /header -->
 
-	<div data-role="content">
+		<div data-role="content">
 	
-	<div id="fb-root"></div>
-	<script>
-  	window.fbAsyncInit = function() {
-    // init the FB JS SDK
-    FB.init({
-      appId      : '170592053078647', // App ID from the App Dashboard
-      channelUrl : 'channel.html', // Channel File for x-domain communication
-      status     : true, // check the login status upon init?
-      cookie     : true, // set sessions cookies to allow your server to access the session?
-      xfbml      : true  // parse XFBML tags on this page?
-    });
-    
-    FB.getLoginStatus(function(response) {
-    	
-  	if (response.status === 'connected') {
-  		alert("connected");
-  		testAPI();
-    	// connected
- 	} else if (response.status === 'not_authorized') {
-    	// not_authorized
-    	alert('not authorized');
-    	login();
-  	} else {
-    	// not_logged_in
-    	alert('not loged in');
-    	login();
-  	}
- 	});
-
-  	};
-
-  	// Load the SDK's source Asynchronously
-  	(function(d, debug){
-    	var js, id = 'facebook-jssdk', ref = d.getElementsByTagName('script')[0];
-     	if (d.getElementById(id)) {return;}
-     	js = d.createElement('script'); js.id = id; js.async = true;
-     	js.src = "//connect.facebook.net/en_US/all" + (debug ? "/debug" : "") + ".js";
-     	ref.parentNode.insertBefore(js, ref);
-   	}(document, /*debug*/ false));
-	</script>
 	
-	<script>
-	function login() {
-    FB.login(function(response) {
-        if (response.authResponse) {
-            // connected
-            testAPI();
-        } else {
-            // cancelled
-        }
-    });
-	}
-	</script>
-	
-	<script>
-	function testAPI() {
-    console.log('Welcome!  Fetching your information.... ');
-    FB.api('/me', function(response) {
-        console.log('Good to see you, ' + response.name + '.');
-    });
-	}
-	</script>
-	
+		
 
 
-    <?php if ($user): ?>
-      <a href="<?php echo $logoutUrl; ?>">Logout</a><br>
+    		<?php if ($user): ?>
+      		<a href="<?php echo $logoutUrl; ?>">Logout</a><br>
       
-      <?php	
-      	try {
-        $fql = 'SELECT uid, name, pic_square FROM user WHERE uid IN (SELECT uid2 FROM friend WHERE uid1 = me()) AND is_app_user = 1 ORDER BY name';
-        $ret_obj = $facebook->api(array(
-                                   'method' => 'fql.query',
-                                   'query' => $fql,
-                                 ));
-
-        // FQL queries return the results in an array, so we have
-        //  to get the user's name from the first element in the array.
+      		<?php	
+      			try {
+        		$fql = 'SELECT uid, name, pic_square FROM user WHERE uid IN (SELECT uid2 FROM friend WHERE uid1 = me()) AND is_app_user = 1 ORDER BY name';
+        		$ret_obj = $facebook->api(array(
+                                   		'method' => 'fql.query',
+                                   		'query' => $fql,
+                                 		));
+         
         
-        $count = count($ret_obj);
         
-        for ($i = 0; $i < $count; $i++) {
-        	// echo '<pre>Name: ' . $ret_obj[$i]['name'] . '</pre>';
-        	?>
-        	<img src="<?php echo $ret_obj[$i]['pic_square']; ?>">
-       		<?php
-        }
-        echo "<br>";
+        
+        		// FQL queries return the results in an array, so we have
+        		//  to get the user's name from the first element in the array.
+        
+        		$count = count($ret_obj);
+        
+        		for ($i = 0; $i < $count; $i++) {
+        			?>
+        			<img src="<?php echo $ret_obj[$i]['pic_square']; ?>">
+       				<?php
+        		}
+        		echo "<br>";
 
-      } catch(FacebookApiException $e) {
-        // If the user is logged out, you can have a 
-        // user ID even though the access token is invalid.
-        // In this case, we'll get an exception, so we'll
-        // just ask the user to login again here.
-        $login_url = $facebook->getLoginUrl(); 
-        echo 'Please <a href="' . $login_url . '">login.</a>';
-        error_log($e->getType());
-        error_log($e->getMessage());
-      }  
-      ?>
+      		} catch(FacebookApiException $e) {
+        		// If the user is logged out, you can have a 
+        		// user ID even though the access token is invalid.
+        		// In this case, we'll get an exception, so we'll
+        		// just ask the user to login again here.
+        		$login_url = $facebook->getLoginUrl(); 
+        		echo 'Please <a href="' . $login_url . '">login.</a>';
+        		error_log($e->getType());
+        		error_log($e->getMessage());
+      		}  
+      		?>
   		
-    <?php else: ?>
-      <div>
-        <a href="<?php echo $loginUrl; ?>">Login with Facebook</a>
-      </div>
-    <?php endif ?>
+    		<?php else: ?>
+      			<div>
+        			<a href="<?php echo $loginUrl; ?>">Login with Facebook</a>
+      			</div>
+    		<?php endif ?>
 
-    <?php if ($user): ?>
+    		<?php if ($user): ?>
     
-    <a href="welcome.php">Continue to application</a><br>
+    			<a href="welcome.php">Continue to application</a><br>
     
-      <img src="https://graph.facebook.com/<?php echo $user; ?>/picture">
+      			<img src="https://graph.facebook.com/<?php echo $user; ?>/picture">
 
-      <!-- <h3>Your User Object (/me)</h3> -->
-      <!-- <pre><?php print_r($user_profile); ?></pre> -->
+      			<!-- <h3>Your User Object (/me)</h3> -->
+      			<!-- <pre><?php print_r($user_profile); ?></pre> -->
       
             
-    <?php else: ?>
-      <strong><em>You are not Connected.</em></strong>
-    <?php endif ?>   	
+    		<?php else: ?>
+      			<strong><em>You are not Connected.</em></strong>
+    		<?php endif ?>   	
    	
   
 		
-	</div><!-- /content -->
+		</div><!-- /content -->
 
 
 	<div data-role="footer">	
@@ -210,7 +167,7 @@ if ($user) {
 	
 	
 
-</div><!-- /page -->
+	</div><!-- /page -->
 
 
 </body>

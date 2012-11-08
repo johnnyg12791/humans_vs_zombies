@@ -49,24 +49,29 @@ include('inc/header.php');
 		<ul data-role="listview" data-inset="true">	
 			<div data-role="collapsible-set">
 				<div data-role="collapsible" data-inset="true">
+				
 					<h3>Search by Game Name</h3>
-					<ul data-role="listview" data-inset="true">
-						<form id="searchByGameName" method="post" action="searchByGameName.php"  data-ajax="false">
-        					<input id="gameName" name="game_name" type="text" placeholder="Enter Game Name" autofocus required>
-					        <input type="submit" id="submit" value="Go">
-						</form>
+					<ul data-role="listview" data-inset="true" id="beforeSearchByGameName">
+						<div id="searchByGameName">
+							
+        					<input id="game_name" name="game_name" type="text" placeholder="Enter Game Name" autofocus required>
+					        <input id="submitGame" type="button" value="Go">
+						</div>
 						<div id="GameNameResults"></div>
 					</ul>
+					
 	        	</div><!-- end of collapsible -->
 	        	
 	        	<div data-role="collapsible" data-inset="true">
 					<h3>Search by Friend Name</h3>
-					<ul data-role="listview" data-inset="true">
-						<form id="searchByFriendName" method="post" action="searchByFriendName.php"  data-ajax="false">
-        					<input id="friendName" name="friend_name" type="text" placeholder="Enter Friend Name" autofocus required>
-							<input type="submit" id="submit" value="Go">
-						</form>
-						<div data-role="listview" data-inset="true" id="FriendNameResults"></div>
+					<ul data-role="listview" data-inset="true" id="beforeSearchByFriendName">
+						<div id="searchByFriendName">
+						
+        					<input id="friend_name" name="friend_name" type="text" placeholder="Enter Friend Name" autofocus required>
+							<input id="submitFriend" type="button" value="Go">
+							
+						</div>
+						<div id="FriendNameResults"></div>
 					</ul>
 	        	</div> <!-- end of collapsible -->
 	        	
@@ -79,24 +84,24 @@ include('inc/header.php');
             	<input id="submit" name = "submit" type = "submit" value="Search For Games Nearby">
             	</form>
 			<!--<a href="gamesNearby.php">Find Games Near Me</a> -->
-								</li>
+			</li>
 		</ul> <!-- end of listview -->
 		
 	</div><!-- /content -->
 	
 	<!--submit search for game name script -->
 	<script type="text/javascript">
-	
-	$("#searchByGameName").submit(function(event) {
-		event.preventDefault();
-		$.post("searchByGameName.php", $("#searchByGameName").serialize(), function(data){
-			$("#GameNameResults").html(data);
+	$("#submitGame").click(function(event) {
+		$.post("searchByGameName.php", {game_name: $("#game_name").val(), latitude: $("#latitude").val(), longitude: $("#longitude").val() }, 
+		function(data){
+				$("#GameNameResults").html(data);
 		});
 	});
+	</script>
 	
-	$("#searchByFriendName").submit(function(event) {
-		event.preventDefault();
-		$.post("searchByFriendName.php", $("#searchByFriendName").serialize(), function(data){
+	<script type="text/javascript">
+	$("#submitFriend").click(function(event) {
+		$.post("searchByFriendName.php", {friend_name: $("#friend_name").val() }, function(data){
 			$("#FriendNameResults").html(data);
 		});
 	});

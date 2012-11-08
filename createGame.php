@@ -30,11 +30,9 @@ require_once('core/init.php');
 $header_title = "Create Game";
 include('inc/header.php');
 
-
 ?>
 
-
-	<body onload = "getLocation()" >
+	<body>
     
     <div data-role="page">
 
@@ -43,10 +41,10 @@ include('inc/header.php');
 	</div><!-- /header -->
 
 	<div data-role="content">
-	
-		
 
 	<script>
+	
+	
        	var latitude = 0;
 		var longitude = 0;
 		if (navigator.geolocation) {
@@ -81,16 +79,15 @@ include('inc/header.php');
 	
 	
 	<ul data-role="listview" data-inset="true" id="beforeCreatedGame">
-	<form action="submitCreateGame.php" method="post" id="createGame">
+	<div id="createGame">
     	<h1>Enter Game Name and Time to start</h1>
     	
         	<input id="game_name" name = "game_name" type="text" placeholder="Enter Game Name" autofocus required>   
         	<input id="start_date" name = "start_date" type="date" placeholder="Enter Start Date">
             <input id="latitude" name = "latitude" type="hidden">
             <input id="longitude" name = "longitude" type="hidden">
-            
-        	<input id="submit" type="submit" value="Go">
-	</form>
+        	<input id="submit" type="button" value="Go">
+	</div>
 	</ul>
 	
 	<div id="GameCreatedResults"></div>
@@ -100,16 +97,24 @@ include('inc/header.php');
 	
 	<!--submit search for game name script -->
 	<script type="text/javascript">
-	$("#createGame").submit(function(event) {
-		event.preventDefault();
-		$.post("submitCreateGame.php", $("#createGame").serialize(), function(data){
-			$("#GameCreatedResults").html(data);
-		});
+	$("#submit").click(function(event) {
+		//makes sure the time choosen is in the future
+		var pickedTime = (new Date($('#start_date').val())).getTime()/1000;
+		var currentTime = Math.round(new Date().getTime()/1000);
+		if (pickedTime < currentTime){
+			alert("This date is in the past, choose a time in the future");	
+			return;
+		}
 		
-		//this removes the form
-		$("#createGame").empty();
-		//TODO: then display the friends list and invites
-
+		
+		$.post("submitCreateGame.php", {game_name: $("#game_name").val(), 
+			start_date: $("#start_date").val(),
+			latitude : $("#latitude").val(),
+			longitude : $("#longitude").val() }, function(data){
+				$("#GameCreatedResults").html(data);
+				//this removes the form
+				$("#createGame").hide();
+		});
 	});
 	
 	</script>
